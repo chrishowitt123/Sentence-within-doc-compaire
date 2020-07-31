@@ -7,7 +7,7 @@ from rapidfuzz import fuzz
 from rapidfuzz import process
 from nltk.tokenize import PunktSentenceTokenizer
 
-text = docx2txt.process('MY COPY_Final HLA.P.1631_Adenda do EIA do Bloco 17_20200620 - Copy EN (1) - Copy.docx')
+text = docx2txt.process('MY COPY_Final HLA.P.1631_Adenda do EIA do Bloco 17_20200620 - Copy EN (1).docx')
 sent_tokenizer = PunktSentenceTokenizer(text)
 sents = sent_tokenizer.tokenize(text)
 sents = set(sents)
@@ -25,5 +25,14 @@ data_tuples = list(zip(x_list,y_list,score))
 
 results = pd.DataFrame(data_tuples, columns=['X','Y', 'Score'])  
 results = results.sort_values(by=['Score'], ascending=False)
-results[results['Score'] > 70].to_csv('resultsSet.csv')
+results = results[results['Score'] > 70]
+results.to_csv('resultsSet.csv')
 
+xlist = list(results['X'])
+ylist = list(results['Y'])
+
+with open("x.txt", "wb") as x:
+    x.write("\n".join(xlist).encode('utf8'))
+    
+with open("y.txt", "wb") as y:
+    y.write("\n".join(ylist).encode('utf8'))
