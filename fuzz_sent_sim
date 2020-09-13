@@ -7,7 +7,7 @@ from rapidfuzz import fuzz
 from rapidfuzz import process
 from nltk.tokenize import PunktSentenceTokenizer
 
-text = docx2txt.process('MY COPY_Final HLA.P.1631_Adenda do EIA do Bloco 17_20200620 - Copy EN (1).docx')
+text = docx2txt.process('unidade 23 HAZOP LOPA (1).docx')
 sent_tokenizer = PunktSentenceTokenizer(text)
 sents = sent_tokenizer.tokenize(text)
 sents = set(sents)
@@ -31,8 +31,8 @@ results.to_csv('SentSim.csv')
 xlist = list(results['X'])
 ylist = list(results['Y'])
 
-with open("x.txt", "wb") as x:
+with open("xS.txt", "wb") as x:
     x.write("\n".join(xlist).encode('utf8'))
     
-with open("y.txt", "wb") as y:
+with open("yS.txt", "wb") as y:
     y.write("\n".join(ylist).encode('utf8'))
