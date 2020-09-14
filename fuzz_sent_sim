@@ -61,21 +61,20 @@ with open("Sy.txt", "wb") as y:
 diffs = []
 
 
-def find(A, B):
+def find(X, Y):
     count = {}
-    for word in A.split():
+    for word in X.split():
         count[word] = count.get(word, 0) + 1
 
-    for word in B.split():
+    for word in Y.split():
         count[word] = count.get(word, 0) + 1
     return [word for word in count if count[word] == 1]
 
 
 
-for A,B in zip(x_list3, y_list3):
-    diffs.append((find(A, B)))
+for X,Y in zip(x_list3, y_list3):
+    diffs.append((find(X, Y)))
     
 diffsList = [', '.join(x) for x in diffs]
 results['Diffs'] = diffsList
 results = results[['Score', 'X', 'Y', 'Diffs']]
-results.to_csv('SentSim.csv', index=False)
