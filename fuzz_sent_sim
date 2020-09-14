@@ -11,6 +11,7 @@ text = docx2txt.process('MY COPY_unidade 23 HAZOP LOPA (2) - Copy.docx')
 sent_tokenizer = PunktSentenceTokenizer(text)
 sents = sent_tokenizer.tokenize(text)
 sents = set(sents)
+
 x_list = []
 y_list = []
 score = []
@@ -21,18 +22,60 @@ for x,y in itertools.combinations(sents, 2):
     x_list.append(x)
     y_list.append(y)
     
-data_tuples = list(zip(x_list,y_list,score))
+# remove consecutive blank lines
+
+x_list1 = []  
+for x in x_list:
+
+    xn = re.sub(r'\n\s*\n', '\n\n', x)
+    x_list1.append(xn)
+    
+y_list1 = []  
+for y in y_list:
+
+    yn = re.sub(r'\n\s*\n', '\n\n', y)
+    y_list1.append(yn)
+    
+data_tuples = list(zip(x_list1,y_list1,score))
 
 results = pd.DataFrame(data_tuples, columns=['X','Y', 'Score'])  
+
 results = results.sort_values(by=['Score'], ascending=False)
 results = results[results['Score'] > 70]
-results.to_csv('SentSim.csv')
 
-xlist = list(results['X'])
-ylist = list(results['Y'])
+x_list3 = list(results['X'])
+y_list3 = list(results['Y'])
+
 
 with open("Sx.txt", "wb") as x:
-    x.write("\n".join(xlist).encode('utf8'))
+    x.write("\n".join(x_list3).encode('utf8'))
     
 with open("Sy.txt", "wb") as y:
-    y.write("\n".join(ylist).encode('utf8'))
+    y.write("\n".join(y_list3).encode('utf8'))
+    
+    
+    
+    
+# uncommon words
+
+diffs = []
+
+
+def find(A, B):
+    count = {}
+    for word in A.split():
+        count[word] = count.get(word, 0) + 1
+
+    for word in B.split():
+        count[word] = count.get(word, 0) + 1
+    return [word for word in count if count[word] == 1]
+
+
+
+for A,B in zip(x_list3, y_list3):
+    diffs.append((find(A, B)))
+    
+diffsList = [', '.join(x) for x in diffs]
+results['Diffs'] = diffsList
+results = results[['Score', 'X', 'Y', 'Diffs']]
+results.to_csv('SentSim.csv', index=False)
