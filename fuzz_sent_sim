@@ -81,7 +81,7 @@ resultsYlist = results['Y'].tolist()
 resultDIFFSYlist = results['Diffs'].tolist()
 
 n = 0
-while n <= len(resultsXlist):
+while n <= len(resultsXlist) - 1:
 
     text = resultsXlist[n] + resultsYlist[n]
     l1 = resultDIFFSYlist[n].split()
