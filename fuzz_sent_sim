@@ -87,8 +87,8 @@ while n <= len(resultsXlist):
     l1 = resultDIFFSYlist[n].split()
 
     
-    print(colored(l1, 'blue','on_yellow'))
-    print(reduce(lambda t, x: t.replace(*x), chain([text], ((t, colored(t,'white','on_red')) for t in l1)))) 
+    print(colored(l1, 'blue'))
+    print(reduce(lambda t, x: t.replace(*x), chain([text], ((t, colored(t,'red')) for t in l1)))) 
     print( "\n""\n")
     
     n = n+1
