@@ -1,16 +1,19 @@
 import docx2txt
 import itertools
 import pandas as pd
-from difflib import SequenceMatcher
 import re
 from rapidfuzz import fuzz
-from rapidfuzz import process
 from nltk.tokenize import PunktSentenceTokenizer
-from functools import reduce
-from itertools import chain
 from termcolor import colored
 
 file = input('Enter path to file: ').strip('"')
+print( "\n")
+print(""" Processing... 
+      
+      |\      _,,,---,,_
+ZZZzz /,`.-'`'    -.  ;-;;,_
+     |,4-  ) )-,_. ,\ (  `'-'
+    '---''(_/--'  `-'\_)   """)
 
 text = docx2txt.process(file)
 sent_tokenizer = PunktSentenceTokenizer(text)
