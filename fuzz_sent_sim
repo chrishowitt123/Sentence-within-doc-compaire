@@ -10,7 +10,7 @@ from functools import reduce
 from itertools import chain
 from termcolor import colored
 
-file = input('Enter path to file: ')
+file = input('Enter path to file: ').strip('"')
 print( "\n")
 
 text = docx2txt.process(file)
@@ -115,6 +115,8 @@ while n <= len(resultsXlist) - 1:
     print(" ".join(formattedText1))
     print( "\n")
     print(" ".join(formattedText2))
-    print( "\n""\n")
+    print( "\n")
+    print( "\n")
+    print( "\n")
     
     n = n+1
