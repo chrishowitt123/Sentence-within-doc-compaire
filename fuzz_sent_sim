@@ -6,8 +6,6 @@ import re
 from rapidfuzz import fuzz
 from rapidfuzz import process
 from nltk.tokenize import PunktSentenceTokenizer
-
-
 from functools import reduce
 from itertools import chain
 from termcolor import colored
@@ -52,16 +50,7 @@ results = results[results['Score'] > 70]
 
 x_list3 = list(results['X'])
 y_list3 = list(results['Y'])
-
-
-with open("Sx.txt", "wb") as x:
-    x.write("\n".join(x_list3).encode('utf8'))
-    
-with open("Sy.txt", "wb") as y:
-    y.write("\n".join(y_list3).encode('utf8'))
-    
-    
-    
+        
     
 # uncommon words
 
@@ -87,14 +76,14 @@ results['Diffs'] = diffsList
 results = results[['Score', 'X', 'Y', 'Diffs']]
 
 
-
-results.to_csv('SentSim.csv', index=False)
-
+resultsXlist = results['X'].tolist()
+resultsYlist = results['Y'].tolist()
+resultDIFFSYlist = results['Diffs'].tolist()
 
 n = 0
 while n <= len(resultsXlist):
 
-    text = resultsXlist[n] + "\n" + resultsYlist[n]
+    text = resultsXlist[n] + resultsYlist[n]
     l1 = resultDIFFSYlist[n].split()
 
     
