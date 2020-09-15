@@ -116,8 +116,7 @@ while n <= len(resultsXlist) - 1:
             formattedText2.append(colored(t,'red'))
         else: 
             formattedText2.append(t)
-
-    
+ 
     print( "\n")
     print(colored(resultSCORElist[n], 'green'))
     print(colored(l1, 'blue'))
