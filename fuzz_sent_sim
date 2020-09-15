@@ -96,7 +96,7 @@ while n <= len(resultsXlist) - 1:
     formattedText1 = []
     for t in text1.split():
         if t in l1:
-            formattedText1.append(colored(t,'white','on_red'))
+            formattedText1.append(colored(t,'red'))
         else: 
             formattedText1.append(t)
 
@@ -104,7 +104,7 @@ while n <= len(resultsXlist) - 1:
     formattedText2 = []
     for t in text2.split():
         if t in l1:
-            formattedText2.append(colored(t,'white','on_red'))
+            formattedText2.append(colored(t,'red'))
         else: 
             formattedText2.append(t)
 
