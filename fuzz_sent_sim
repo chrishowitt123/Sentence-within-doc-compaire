@@ -80,6 +80,7 @@ results = results[['Score', 'X', 'Y', 'Diffs']]
 resultsXlist = results['X'].tolist()
 resultsYlist = results['Y'].tolist()
 resultDIFFSYlist = results['Diffs'].tolist()
+resultSCORElist  = results['Score'].tolist()
 
 
 
@@ -110,6 +111,7 @@ while n <= len(resultsXlist) - 1:
 
     
     
+    print(colored(resultSCORElist[n], 'green'))
     print(colored(l1, 'blue'))
     print( "\n")
     print(" ".join(formattedText1))
