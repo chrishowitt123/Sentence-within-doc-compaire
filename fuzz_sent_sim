@@ -11,7 +11,6 @@ from itertools import chain
 from termcolor import colored
 
 file = input('Enter path to file: ').strip('"')
-print( "\n")
 
 text = docx2txt.process(file)
 sent_tokenizer = PunktSentenceTokenizer(text)
@@ -109,8 +108,7 @@ while n <= len(resultsXlist) - 1:
         else: 
             formattedText2.append(t)
 
-    
-    
+    print( "\n")
     print(colored(resultSCORElist[n], 'green'))
     print(colored(l1, 'blue'))
     print( "\n")
