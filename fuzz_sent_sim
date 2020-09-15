@@ -8,7 +8,7 @@ from termcolor import colored
 
 file = input('Enter path to file: ').strip('"')
 print( "\n")
-print(""" Processing... 
+print(""" Processing.. 
       
       |\      _,,,---,,_
 ZZZzz /,`.-'`'    -.  ;-;;,_
