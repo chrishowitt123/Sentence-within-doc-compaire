@@ -5,8 +5,39 @@ import re
 from rapidfuzz import fuzz
 from nltk.tokenize import PunktSentenceTokenizer
 from termcolor import colored
+import tkinter as tk
+from tkinter import filedialog
 
-file = input('Enter path to file: ').strip('"')
+root = tk.Tk()
+root.withdraw()
+
+print("\n\n=======================================================================")
+print("Welcome to SentSim!")
+print( "\n")  
+print("""    __________________   __________________
+.-/|                  \ /                  |\-.
+||||                   |                   ||||
+||||                   |       ~~*~~       ||||
+||||    --==*==--      |                   ||||
+||||                   |                   ||||
+||||                   |                   ||||
+||||                   |     --==*==--     ||||
+||||                   |                   ||||
+||||                   |                   ||||
+||||                   |                   ||||
+||||                   |                   ||||
+||||__________________ | __________________||||
+||/===================\|/===================\||
+`--------------------~___~-------------------''""")
+print("=======================================================================\n\n ")
+
+answer = input('Do you need to search for your file? Y/N: ').lower()
+print('\n')
+if answer == 'y':
+    file = filedialog.askopenfilename()
+else:
+    file = input('Paste the location of the file: ').strip('"')
+
 print( "\n")
 print(""" Processing.. 
       
