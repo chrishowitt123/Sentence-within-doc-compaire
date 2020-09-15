@@ -11,6 +11,7 @@ from itertools import chain
 from termcolor import colored
 
 file = input('Enter path to file: ')
+print( "\n")
 
 text = docx2txt.process(file)
 sent_tokenizer = PunktSentenceTokenizer(text)
@@ -80,15 +81,40 @@ resultsXlist = results['X'].tolist()
 resultsYlist = results['Y'].tolist()
 resultDIFFSYlist = results['Diffs'].tolist()
 
+
+
+
 n = 0
 while n <= len(resultsXlist) - 1:
 
-    text = resultsXlist[n] + resultsYlist[n]
+    text1 = resultsXlist[n]  
+    text2 = resultsYlist[n] 
     l1 = resultDIFFSYlist[n].split()
 
     
+    
+    formattedText1 = []
+    for t in text1.split():
+        if t in l1:
+            formattedText1.append(colored(t,'white','on_red'))
+        else: 
+            formattedText1.append(t)
+
+    
+    formattedText2 = []
+    for t in text2.split():
+        if t in l1:
+            formattedText2.append(colored(t,'white','on_red'))
+        else: 
+            formattedText2.append(t)
+
+    
+    
     print(colored(l1, 'blue'))
-    print(reduce(lambda t, x: t.replace(*x), chain([text], ((t, colored(t,'red')) for t in l1)))) 
+    print( "\n")
+    print(" ".join(formattedText1))
+    print( "\n")
+    print(" ".join(formattedText2))
     print( "\n""\n")
     
     n = n+1
