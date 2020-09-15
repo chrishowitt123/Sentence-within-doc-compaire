@@ -34,6 +34,7 @@ answer = input('Do you need to search for your file? Y/N: ').lower()
 print('\n')
 if answer == 'y':
     file = filedialog.askopenfilename()
+
 else:
     file = input('Paste the location of the file: ').strip('"')
 
@@ -135,7 +136,7 @@ while n <= len(resultsXlist) - 1:
     formattedText1 = []
     for t in text1.split():
         if t in l1:
-            formattedText1.append(colored(t,'red'))
+            formattedText1.append(colored(t,'red', attrs=['bold']))
         else: 
             formattedText1.append(t)
 
@@ -143,7 +144,7 @@ while n <= len(resultsXlist) - 1:
     formattedText2 = []
     for t in text2.split():
         if t in l1:
-            formattedText2.append(colored(t,'red'))
+            formattedText2.append(colored(t,'red', attrs=['bold']))
         else: 
             formattedText2.append(t)
  
