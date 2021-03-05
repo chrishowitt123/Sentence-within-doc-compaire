@@ -1,48 +1,68 @@
+import pandas as pd
+import tkinter
+from tkinter import filedialog
+from iteration_utilities import deepflatten
+from collections import Counter 
 import docx2txt
+from nltk.tokenize import PunktSentenceTokenizer
+import nltk
+nltk.download('punkt')
+from termcolor import colored
+import re
 import itertools
 import pandas as pd
-import re
 from rapidfuzz import fuzz
-from nltk.tokenize import PunktSentenceTokenizer
-from termcolor import colored
-from tkinter import filedialog
+
+pd.set_option('max_colwidth', 50)
+
+'''MATCHING SENTENCES'''
 
 
-print( "\n")  
-print("Welcome to SentSim!")
-print( "\n")  
-print("""     ______ ______
-    _/      Y      \_
-   // ~~ ~~ | ~~ ~  \\
-  // ~ ~ ~~ | ~~~ ~~ \\      
- //________.|.________\\     
-`----------`-'----------'""")
-print( "\n") 
-answer = input('Do you need to search for your file? Y/N: ').lower()
-print('\n')
-if answer == 'y':
-    file = filedialog.askopenfilename()
+filename = r"C:\Users\chris\Documents\Transgola\Clients\PROJECTS\2021\387010321_TM_JTI\Translation\final\Contrato tipo Sociprime_PAIRS_EN_TM.docx"
+text = docx2txt.process(filename)
 
-else:
-    file = input('Paste the location of the file: ').strip('"')
+sents = text.replace("\t","").replace("No. ", "No.").replace("\r", "").replace("\n", ". ").replace(": ", ". ").replace("; ", ". ").split(". ")  
 
-print( "\n")
-print(""" Processing.. 
-      
-      |\      _,,,---,,_
-ZZZzz /,`.-'`'    -.  ;-;;,_
-     |,4-  ) )-,_. ,\ (  `'-'
-    '---''(_/--'  `-'\_)   """)
+
+# sent_tokenizer = PunktSentenceTokenizer(text)
+# sents = sent_tokenizer.tokenize(text)
+# sents
+
+allSents = []
+
+for sent in sents:
+    s = sent.split("\n")
+    allSents.append(s)
     
-    
-print( "\n")   
-print( "\n")  
-print( "\n")  
-print( "\n")   
+allSents = list(deepflatten(allSents, depth=1))
+allSents = [ x.replace('\t', '') for x in allSents]
+allSents = [x for x in allSents if x.strip()] 
+allSents = [x for x in allSents if len(x.split(' ')) > 4 ]
 
-text = docx2txt.process(file)
-sent_tokenizer = PunktSentenceTokenizer(text)
-sents = sent_tokenizer.tokenize(text)
+repeaters  = Counter(allSents)
+repeaters  = {k:v for (k,v) in repeaters.items() if v > 1}
+
+def replace(string, char): 
+    pattern = char + '{2,}'
+    string = re.sub(pattern, char, string) 
+    return string 
+textClean = replace(text,'\n')
+
+textClean = textClean.replace('\n', ' \n ').replace('\t', ' ')
+RepStrings = list(repeaters.keys())
+
+for s in RepStrings:
+    if s in textClean:
+        textClean= textClean.replace(s, colored(s, 'blue',  attrs=['bold']))
+        
+# print(textClean)       
+
+
+
+
+
+'''SIMILAR STRINGS'''
+
 sents = set(sents)
 
 x_list = []
@@ -74,7 +94,7 @@ data_tuples = list(zip(x_list1,y_list1,score))
 results = pd.DataFrame(data_tuples, columns=['X','Y', 'Score'])  
 
 results = results.sort_values(by=['Score'], ascending=False)
-results = results[results['Score'] > 60]
+results = results[results['Score'] >60]
 
 x_list3 = list(results['X'])
 y_list3 = list(results['Y'])
@@ -110,7 +130,17 @@ resultDIFFSYlist = results['Diffs'].tolist()
 resultSCORElist  = results['Score'].tolist()
 
 
+print( "\n")
+print(f'Repeated strings!')
+print( "\n")
 
+for s in RepStrings:
+    print(colored(s, 'blue', attrs=['bold']))
+    print( "\n")
+    
+print(textClean.replace('\n', ' '))
+print( "\n")
+print( "\n")
 
 n = 0
 while n <= len(resultsXlist) - 1:
@@ -135,10 +165,14 @@ while n <= len(resultsXlist) - 1:
             formattedText2.append(colored(t,'red', attrs=['bold']))
         else: 
             formattedText2.append(t)
- 
+            
+            
+            
+                 
+            
     print( "\n")
-    print(colored(resultSCORElist[n], 'green'))
-    print(colored(l1, 'blue'))
+    print(colored(resultSCORElist[n], 'green', attrs=['bold']))
+    print(colored(l1, 'blue', attrs=['bold']))
     print( "\n")
     print(" ".join(formattedText1))
     print( "\n")
